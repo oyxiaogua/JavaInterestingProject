@@ -31,4 +31,15 @@ public class Test_RandomBeans {
 		Bean_Person person = enhancedRandom.nextObject(Bean_Person.class);
 		System.out.println(person);
 	}
+
+	@Test
+	public void testRandomBeans_EnhancedRandom_Config2() {
+		FieldDefinition<?, ?> strArrFieldDefinition = FieldDefinitionBuilder.field().named("strArr")
+				.ofType(String[].class).get();
+		EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+				.randomize(String.class, CustomerStringRandomizer.aNewAlphaNumericRandomizer(4, 6)).maxCollectionSize(3)
+				.dateRange(LocalDate.now(), LocalDate.now().plusMonths(1)).exclude(strArrFieldDefinition).build();
+		Bean_Person person = enhancedRandom.nextObject(Bean_Person.class);
+		System.out.println(person);
+	}
 }
